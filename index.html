@@ -1,0 +1,70 @@
+<!--
+unity webgl responsive
+
+template by dom
+dom@crowscrowscrows.com
+https://twitter.com/zerstoerer
+
+source code on github
+https://github.com/sno/unity-webgl-responsive
+-->
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <title>FlyingSanta</title>
+  </head>
+  <body>
+    <img id="spinner" src="bg-spinner.gif" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 128px; height: 128px; z-index: 1;"></img>
+    <div class="webgl-wrapper">
+      <div class="aspect"></div>
+      <div class="webgl-content" >
+        <div id="unityContainer">
+          <canvas id="unity-canvas" style="background: #6C6C6C"></canvas>
+        </div>
+      </div>
+    </div>
+    <script src="MyLoader.js"></script>
+    <script>
+
+      const spinner = document.querySelector('#spinner')
+
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/Build.data.unityweb",
+        frameworkUrl: "Build/Build.asm.framework.js.unityweb",
+        codeUrl: "Build/Build.asm.js.unityweb",
+        memoryUrl: "Build/Build.asm.mem.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "MARS12",
+        productName: "FlyingSanta",
+        productVersion: "1.6",
+      }).then((unityInstance) => {
+        myGameInstance = unityInstance;
+        spinner.remove()
+      });
+    </script>
+
+    <!-- check for F key press to toggle full screen -->
+    <script>
+      var isFullscreen = false;
+
+      document.addEventListener('keydown', function(event) {
+          if (event.which === 70) {
+              if (!isFullscreen) {
+                myGameInstance.SetFullscreen(1);
+              } else {
+                myGameInstance.SetFullscreen(0);
+              }
+              isFullscreen = !isFullscreen;
+          }
+      });
+    </script>
+  </body>
+</html>
